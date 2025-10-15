@@ -1,0 +1,29 @@
+{
+  "name": "game-management-app",
+  "version": "1.2.0",
+  "description": "This is an inventory application for a game shop,I use Express JS along side posgreSQL store and process data",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start":"node app.js",
+    "dev": "node --watch app.js",
+    "populatedb": "node db/populatedb.js",
+    "cleardb": "node db/cleardb.js"
+
+  },
+  "keywords": [],
+  "author": "FORSAKANG CHOFOR JUNIOR",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/pg": "^8.15.5",
+    "ejs-lint": "^2.0.1"
+  }
+}

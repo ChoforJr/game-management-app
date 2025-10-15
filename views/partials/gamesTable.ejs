@@ -1,0 +1,23 @@
+<table>
+  <caption>
+    All Games
+  </caption>
+  <tr>
+    <th>ID</th>
+    <th>Game</th>
+    <th>Released Year</th>
+    <th><%= devHeader %></th>
+    <th><%= genreHeader %></th>
+    <th>Sales in Millions</th>
+  </tr>
+  <% for( let i = 0; i < gameArr.length; i++ ) { %>
+  <tr>
+    <td><%= gameArr[i].id %></td>
+    <td><%= gameArr[i].game %></td>
+    <td><%= gameArr[i].year %></td>
+    <td><%= gameArr[i].dev %></td>
+    <td><%= gameArr[i].genre %></td>
+    <td><%= gameArr[i].sales %></td>
+  </tr>
+  <% } %>
+</table>

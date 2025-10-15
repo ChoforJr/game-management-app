@@ -1,0 +1,13 @@
+<h3>Categories</h3>
+<label for="developers">Developer</label>
+<select name="developers" id="developers">
+  <% for( let i = 0; i < devArr.length; i++ ) { %>
+  <option value="<%= devArr[i].id %>"><%= devArr[i].dev %></option>
+  <% } %>
+</select>
+<label for="genres">Genres</label>
+<select name="genres" id="genres">
+  <% for( let i = 0; i < genreArr.length; i++ ) { %>
+  <option value="<%= genreArr[i].id %>"><%= genreArr[i].genre %></option>
+  <% } %>
+</select>
