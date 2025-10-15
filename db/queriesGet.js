@@ -32,7 +32,23 @@ export async function getGamesInfoByDevID(devId) {
     INNER JOIN developers ON games_devs.dev_id = developers.id
     INNER JOIN genres ON games.main_genre=genres.id
     WHERE developers.id = $1;
-    `[devId]
+    `,
+    [devId]
+  );
+  return rows;
+}
+
+export async function getGamesInfoByGenreID(genreId) {
+  const { rows } = await Pool.query(
+    `
+    SELECT games.id AS id, games.game AS game, games.res_year AS year, 
+    developers.dev AS dev, genres.genre AS genre, games.sales_in_millions AS sales 
+    FROM games INNER JOIN games_genres ON games.id=games_genres.game_id 
+    INNER JOIN genres ON games_genres.genre_id = genres.id
+    INNER JOIN developers ON games.main_dev=developers.id
+    WHERE genres.id = $1;
+    `,
+    [genreId]
   );
   return rows;
 }

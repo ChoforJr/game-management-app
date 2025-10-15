@@ -3,7 +3,8 @@ import {
   getDevList,
   getGenreList,
   getGamesInfoByDevID,
-} from "../db/queries.js";
+  getGamesInfoByGenreID,
+} from "../db/queriesGet.js";
 // This just shows the new stuff we're adding to the existing
 // import { body, validationResult, matchedData } from "express-validator";
 
@@ -34,12 +35,22 @@ export async function homePageGet(req, res) {
 }
 
 export async function devPageGet(req, res) {
-  const devInfo = await getGamesInfoByDevID(req.params.id);
-  console.log(req.params.id);
+  const gameArr = await getGamesInfoByDevID(req.params.id);
   res.render("devPage", {
-    devInfo,
+    gameArr,
     devHeader: "Developer",
     genreHeader: "Main Genre",
+    devName: gameArr[0].dev,
+  });
+}
+
+export async function genrePageGet(req, res) {
+  const gameArr = await getGamesInfoByGenreID(req.params.id);
+  res.render("genrePage", {
+    gameArr,
+    devHeader: "Main Developer",
+    genreHeader: "Genre",
+    genreName: gameArr[0].genre,
   });
 }
 
