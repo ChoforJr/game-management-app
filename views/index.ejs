@@ -1,33 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('partials/head')%>
+  <a href="/gamePage">Add New Game</a>
+  <%- include('partials/head',{script})%>
   <body>
     <%- include('partials/homePageLink') %>
     <%-include('partials/selectCategories', {devArr,genreArr}) %>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>
-    <script>
-      const getDev = document.querySelector("#developers");
-
-      getDev.addEventListener("change", handleOptionChangeDev);
-
-      async function handleOptionChangeDev(event) {
-        const selectedValue = this.value;
-
-        if (selectedValue) {
-          window.location.href = selectedValue;
-        }
-      }
-      const getGenre = document.querySelector("#genres");
-
-      getGenre.addEventListener("change", handleOptionChangeGenre);
-
-      async function handleOptionChangeGenre(event) {
-        const selectedValue = this.value;
-
-        if (selectedValue) {
-          window.location.href = selectedValue;
-        }
-      }
-    </script>
   </body>
 </html>
