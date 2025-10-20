@@ -77,18 +77,18 @@ export const addNewGame = [
   validateGame,
   async (req, res) => {
     const errors = validationResult(req);
-    let devOthers, genreOthers;
-    if (!req.body.otherDev) {
-      devOthers = [];
-    } else {
-      devOthers = req.body.otherDev.map(Number);
-    }
-    if (!req.body.otherGenre) {
-      genreOthers = [];
-    } else {
-      genreOthers = req.body.otherGenre.map(Number);
-    }
     if (!errors.isEmpty()) {
+      let devOthers, genreOthers;
+      if (!req.body.otherDev) {
+        devOthers = [];
+      } else {
+        devOthers = req.body.otherDev.map(Number);
+      }
+      if (!req.body.otherGenre) {
+        genreOthers = [];
+      } else {
+        genreOthers = req.body.otherGenre.map(Number);
+      }
       return res.status(400).render("gamePage", {
         errors: errors.array(),
         game: req.body.game,
