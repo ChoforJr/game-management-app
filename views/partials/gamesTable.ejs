@@ -8,7 +8,7 @@
     <th>Released Year</th>
     <th><%= devHeader %></th>
     <th><%= genreHeader %></th>
-    <th>Sales in Millions</th>
+    <th>Sales</th>
   </tr>
   <% for( let i = 0; i < gameArr.length; i++ ) { %>
   <tr>
@@ -17,7 +17,7 @@
     <td><%= gameArr[i].year %></td>
     <td><%= gameArr[i].dev %></td>
     <td><%= gameArr[i].genre %></td>
-    <td><%= gameArr[i].sales %></td>
+    <td><%= gameArr[i].sales %> Millions</td>
   </tr>
   <% } %>
 </table>

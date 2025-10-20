@@ -7,30 +7,39 @@
     <form action="/gamePage" method="post">
       <label for="game">
         Name
-        <input type="text" name="game" id="game" />
+        <input type="text" name="game" id="game" value="<%= locals.game %>" />
       </label>
 
       <label for="year">
         Release Year
-        <input type="number" name="year" id="year" />
+        <input type="number" name="year" id="year" value="<%= locals.year %>" />
       </label>
 
       <label for="sales">
-        Sales
-        <input type="number" name="sales" id="sales" />
+        Sales In Millions
+        <input
+          type="number"
+          name="sales"
+          id="sales"
+          value="<%= locals.sales %>"
+        />
       </label>
       <br />
       <label for="mainDev">Select Main Developer</label>
       <select name="mainDev" id="mainDev">
         <% for( let i = 0; i < devArr.length; i++ ) { %>
-        <option value="<%= devArr[i].id %>"><%= devArr[i].dev %></option>
+        <option value="<%= devArr[i].id %>" 
+          <% if (locals.mainDev == devArr[i].id ) { %> selected <% } %> 
+          > <%= devArr[i].dev %></option>
         <% } %>
       </select>
 
       <label for="mainGenres">Select Main Genres</label>
       <select name="mainGenres" id="mainGenres">
         <% for( let i = 0; i < genreArr.length; i++ ) { %>
-        <option value="<%= genreArr[i].id %>"><%= genreArr[i].genre %></option>
+        <option value="<%= genreArr[i].id %>" 
+          <% if (locals.mainGenres == genreArr[i].id ) { %> selected <% } %> 
+          > <%= genreArr[i].genre %></option>
         <% } %>
       </select>
       <br />
@@ -43,6 +52,7 @@
             name="otherDev[]"
             id="dev_<%= devArr[i].id %>"
             value="<%= devArr[i].id %>"
+            <% if (otherDev.includes(devArr[i].id)) { %> checked <% } %>
           />
           <label for="dev_<%= devArr[i].id %>"><%= devArr[i].dev %></label>
         </div>
@@ -58,6 +68,7 @@
             name="otherGenre[]"
             id="genre_<%= genreArr[i].id %>"
             value="<%= genreArr[i].id %>"
+            <% if (otherGenre.includes(genreArr[i].id)) { %> checked <% } %>
           />
           <label for="genre_<%= genreArr[i].id %>"
             ><%= genreArr[i].genre %></label
@@ -67,5 +78,8 @@
       </fieldset>
       <button type="submit">Submit</button>
     </form>
+    <% if (locals.errors) {%>
+      <%- include('partials/errors',{errors}) %>
+    <% } %>
   </body>
 </html>

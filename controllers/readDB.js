@@ -47,5 +47,7 @@ export async function gamePageGet(req, res) {
     devArr,
     genreArr,
     script: "addGame.js",
+    otherDev: [],
+    otherGenre: [],
   });
 }
