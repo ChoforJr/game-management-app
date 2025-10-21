@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head')%>
+  <body>
+    <%- include('partials/homePageLink') %>
+    <h1>Add New Developer</h1>
+    <form action="/addDev" method="post">
+      <label for="newDev">
+        Studio Name :
+        <input
+          type="text"
+          name="newDev"
+          id="newDev"
+          value="<%= locals.newDev %>"
+        />
+      </label>
+
+      <label for="yearFd">
+        Year Founded :
+        <input
+          type="number"
+          name="yearFd"
+          id="yearFd"
+          value="<%= locals.yearFd %>"
+        />
+      </label>
+      <br />
+      <fieldset class="games">
+        <legend>Games Made:</legend>
+        <% for( let i = 0; i < gameArr.length; i++ ) { %>
+        <div class="games-checkbox-wrapper">
+          <input type="checkbox" name="gamesMd[]" id="games_<%= gameArr[i].id
+          %>" value="<%= gameArr[i].id %>" <%= gamesMd.includes(gameArr[i].id) ?
+          'checked' : '' %> />
+          <label for="games_<%= gameArr[i].id %>"><%= gameArr[i].game %></label>
+        </div>
+        <% } %>
+      </fieldset>
+      <button type="submit">Submit</button>
+    </form>
+    <% if (locals.errors) {%> <%- include('partials/errors',{errors}) %> <% } %>
+  </body>
+</html>

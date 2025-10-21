@@ -42,3 +42,41 @@ export async function insertGame(
     ]
   );
 }
+
+export async function insertDev(newDev, yearFd, gamesMd) {
+  await Pool.query(
+    `
+    WITH inserted_dev AS (
+        INSERT INTO developers (dev, found_year)
+        VALUES ($1, $2)
+        RETURNING id
+    )
+        INSERT INTO games_devs (dev_id, game_id)
+        SELECT
+            indev.id AS dev_id,
+            UNNEST($3::int[]) AS game_id
+        FROM inserted_dev indev
+        RETURNING dev_id;
+    `,
+    [newDev, yearFd, gamesMd]
+  );
+}
+
+export async function insertGenre(newGenre, gamesInc) {
+  await Pool.query(
+    `
+    WITH inserted_genres AS (
+        INSERT INTO genres (genre)
+        VALUES ($1)
+        RETURNING id
+    )
+        INSERT INTO games_genres (genre_id, game_id)
+        SELECT
+            insGen.id AS genre_id,
+            UNNEST($2::int[]) AS game_id
+        FROM inserted_genres insGen
+        RETURNING genre_id;
+    `,
+    [newGenre, gamesInc]
+  );
+}

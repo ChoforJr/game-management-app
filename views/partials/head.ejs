@@ -1,6 +1,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <% if (locals.script) { %>
   <script type="module" src="/<%= locals.script %>" defer></script>
+  <% } %>
   <title>Game Management App</title>
 </head>

@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <a href="/gamePage">Add New Game</a>
   <%- include('partials/head',{script})%>
   <body>
+    <ul>
+      <li>
+        <a href="/gamePage">Add New Game</a>
+      </li>
+      <li>
+        <a href="/addDev">Add New Developer</a>
+      </li>
+      <li>
+        <a href="/addGenre">Add New Genre</a>
+      </li>
+    </ul>
     <%- include('partials/homePageLink') %>
     <%-include('partials/selectCategories', {devArr,genreArr}) %>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>

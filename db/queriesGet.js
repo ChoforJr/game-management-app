@@ -38,6 +38,17 @@ export async function getGamesInfoByDevID(devId) {
   return rows;
 }
 
+export async function getDevNameWithID(devId) {
+  const { rows } = await Pool.query(
+    `
+    SELECT dev FROM developers
+    WHERE developers.id = $1;
+    `,
+    [devId]
+  );
+  return rows;
+}
+
 export async function getGamesInfoByGenreID(genreId) {
   const { rows } = await Pool.query(
     `
@@ -46,6 +57,17 @@ export async function getGamesInfoByGenreID(genreId) {
     FROM games INNER JOIN games_genres ON games.id=games_genres.game_id 
     INNER JOIN genres ON games_genres.genre_id = genres.id
     INNER JOIN developers ON games.main_dev=developers.id
+    WHERE genres.id = $1;
+    `,
+    [genreId]
+  );
+  return rows;
+}
+
+export async function getGenreNameWithID(genreId) {
+  const { rows } = await Pool.query(
+    `
+    SELECT genre FROM genres
     WHERE genres.id = $1;
     `,
     [genreId]
