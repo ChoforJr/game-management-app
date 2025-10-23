@@ -70,18 +70,12 @@ export async function addGenrePageGet(req, res) {
 
 export async function updateGamePageGet(req, res) {
   const gameArrByID = await getGameInfoById(req.params.id);
+
   const otherDevArr = await getDevsByGameId(req.params.id);
   const otherGenreArr = await getGenreByGameId(req.params.id);
+
   const devArr = await getDevList();
   const genreArr = await getGenreList();
-
-  otherDevArr
-    .fill((item) => item.id !== gameArrByID[0].main_dev)
-    .map((item) => item.id);
-
-  otherGenreArr
-    .fill((item) => item.id !== gameArrByID[0].main_genre)
-    .map((item) => item.id);
 
   res.render("gamePage", {
     pageState: `Edit Game With ID: ${req.params.id}`,
@@ -90,8 +84,8 @@ export async function updateGamePageGet(req, res) {
     devArr,
     genreArr,
     script: "editGame.js",
-    otherDev: otherDevArr,
-    otherGenre: otherGenreArr,
+    otherDev: otherDevArr.map((item) => item.id),
+    otherGenre: otherGenreArr.map((item) => item.id),
     game: gameArrByID[0].game,
     year: gameArrByID[0].res_year,
     sales: gameArrByID[0].sales_in_millions,

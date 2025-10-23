@@ -56,7 +56,7 @@ export async function getGamesInfoByGenreID(genreId) {
 export async function getGameInfoById(gameId) {
   const { rows } = await Pool.query(
     `
-    SELECT * from games where games.id = $1;
+    SELECT * FROM games WHERE games.id = $1;
     `,
     [gameId]
   );
@@ -64,21 +64,27 @@ export async function getGameInfoById(gameId) {
 }
 
 export async function getDevsByGameId(gameId) {
+  const gameInfo = await getGameInfoById(gameId);
+  const mainDev = gameInfo[0].main_dev;
   const { rows } = await Pool.query(
     `
-    SELECT dev_id AS id from games_devs where game_id = $1;
+    SELECT dev_id AS id FROM games_devs 
+    WHERE game_id = $1 AND dev_id !=$2;
     `,
-    [gameId]
+    [gameId, mainDev]
   );
   return rows;
 }
 
 export async function getGenreByGameId(gameId) {
+  const gameInfo = await getGameInfoById(gameId);
+  const mainGenre = gameInfo[0].main_genre;
   const { rows } = await Pool.query(
     `
-    SELECT genre_id AS id from games_genres where game_id = $1;
+    SELECT genre_id AS id FROM games_genres 
+    WHERE game_id = $1 AND genre_id !=$2;
     `,
-    [gameId]
+    [gameId, mainGenre]
   );
   return rows;
 }
