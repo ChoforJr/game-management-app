@@ -9,6 +9,7 @@
     <th><%= devHeader %></th>
     <th><%= genreHeader %></th>
     <th>Sales</th>
+    <th>Updates</th>
   </tr>
   <% for( let i = 0; i < gameArr.length; i++ ) { %>
   <tr>
@@ -18,6 +19,9 @@
     <td><%= gameArr[i].dev %></td>
     <td><%= gameArr[i].genre %></td>
     <td><%= gameArr[i].sales %> Millions</td>
+    <td>
+      <button id="<%= gameArr[i].id %>" class="updateBtn">Update</button>
+    </td>
   </tr>
   <% } %>
 </table>

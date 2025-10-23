@@ -38,17 +38,6 @@ export async function getGamesInfoByDevID(devId) {
   return rows;
 }
 
-export async function getDevNameWithID(devId) {
-  const { rows } = await Pool.query(
-    `
-    SELECT dev FROM developers
-    WHERE developers.id = $1;
-    `,
-    [devId]
-  );
-  return rows;
-}
-
 export async function getGamesInfoByGenreID(genreId) {
   const { rows } = await Pool.query(
     `
@@ -64,29 +53,32 @@ export async function getGamesInfoByGenreID(genreId) {
   return rows;
 }
 
-export async function getGenreNameWithID(genreId) {
+export async function getGameInfoById(gameId) {
   const { rows } = await Pool.query(
     `
-    SELECT genre FROM genres
-    WHERE genres.id = $1;
+    SELECT * from games where games.id = $1;
     `,
-    [genreId]
+    [gameId]
   );
   return rows;
 }
 
-export async function insertMessage(user, message) {
-  await Pool.query("INSERT INTO messages (username, text) VALUES ($1, $2)", [
-    user,
-    message,
-  ]);
+export async function getDevsByGameId(gameId) {
+  const { rows } = await Pool.query(
+    `
+    SELECT dev_id AS id from games_devs where game_id = $1;
+    `,
+    [gameId]
+  );
+  return rows;
 }
 
-export async function searchMessageByID(id) {
-  const result = await Pool.query(
-    "SELECT username AS user, text, added FROM messages WHERE id = $1",
-    [id]
+export async function getGenreByGameId(gameId) {
+  const { rows } = await Pool.query(
+    `
+    SELECT genre_id AS id from games_genres where game_id = $1;
+    `,
+    [gameId]
   );
-
-  return result.rows;
+  return rows;
 }

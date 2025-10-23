@@ -1,13 +1,13 @@
-const mainDevSelect = document.querySelector("#mainDev");
+export const mainDevSelect = document.querySelector("#mainDev");
 const devCheckboxWrappers = document.querySelectorAll(
   ".otherDevs .dev-checkbox-wrapper"
 );
-const mainGenreSelect = document.querySelector("#mainGenres");
+export const mainGenreSelect = document.querySelector("#mainGenres");
 const genreCheckboxWrappers = document.querySelectorAll(
   ".otherGenres .genre-checkbox-wrapper"
 );
 
-function updateAvailableDevs() {
+export function updateAvailableDevs() {
   const selDevValue = mainDevSelect.options[mainDevSelect.selectedIndex].value;
 
   devCheckboxWrappers.forEach((wrapper) => {
@@ -23,7 +23,7 @@ function updateAvailableDevs() {
     }
   });
 }
-function updateAvailableGenres() {
+export function updateAvailableGenres() {
   const selGenreValue =
     mainGenreSelect.options[mainGenreSelect.selectedIndex].value;
 

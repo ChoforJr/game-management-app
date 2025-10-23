@@ -3,8 +3,8 @@
   <%- include('partials/head',{script})%>
   <body>
     <%- include('partials/homePageLink') %>
-    <h1>Add New Game</h1>
-    <form action="/gamePage" method="post">
+    <h1><%= pageState %></h1>
+    <form action="/<%= action %>" method="post">
       <label for="game">
         Name
         <input type="text" name="game" id="game" value="<%= locals.game %>" />
@@ -76,7 +76,7 @@
         </div>
         <% } %>
       </fieldset>
-      <button type="submit">Submit</button>
+      <button type="submit" id="submitBtn"><%= submitState %></button>
     </form>
     <% if (locals.errors) {%>
       <%- include('partials/errors',{errors}) %>

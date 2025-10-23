@@ -6,6 +6,7 @@ import {
   gamePageGet,
   addDevPageGet,
   addGenrePageGet,
+  updateGamePageGet,
 } from "../controllers/readDB.js";
 
 import { addNewGame, addNewDev, addNewGenre } from "../controllers/postToDB.js";
@@ -26,5 +27,7 @@ indexRouter.post("/addDev", addNewDev);
 
 indexRouter.get("/addGenre", addGenrePageGet);
 indexRouter.post("/addGenre", addNewGenre);
+
+indexRouter.get("/gamePage/:id", updateGamePageGet);
 
 export default indexRouter;

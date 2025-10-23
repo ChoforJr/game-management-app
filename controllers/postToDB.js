@@ -101,6 +101,9 @@ export const addNewGame = [
         script: "addGame.js",
         devArr,
         genreArr,
+        pageState: "Add New Game",
+        submitState: "Submit",
+        action: "gamePage",
       });
     }
     const { game, year, sales, mainDev, mainGenres, otherDev, otherGenre } =
