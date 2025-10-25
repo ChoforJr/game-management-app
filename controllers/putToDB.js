@@ -124,68 +124,71 @@ export const updateGame = [
   },
 ];
 
-// const validateNewDev = [
-//   body("newDev")
-//     .trim()
-//     .matches(/^[A-Za-z0-9\s]+$/)
-//     .withMessage(
-//       "Studio Name : must contain only letters, numbers, and spaces."
-//     )
-//     .isLength({ min: 3, max: 32 })
-//     .withMessage("Studio Name : Has to have a length of between 3 and 32")
-//     .custom(async (value) => {
-//       devArr.forEach((element) => {
-//         if (element.dev.toLowerCase() === value.toLowerCase()) {
-//           throw new Error("Studio Name : Has already been Added");
-//         }
-//       });
-//       return true;
-//     }),
-//   body("yearFd")
-//     .trim()
-//     .isInt({ min: 1900, max: 2100 })
-//     .withMessage("Founded Year: must be between 1900 to 2100"),
-//   body("gamesMd")
-//     .optional()
-//     .isArray()
-//     .withMessage("Games Made : must be an array (internal error)")
-//     .custom((value) => {
-//       const invalidgames = value.filter(
-//         (id) => !gameIds.includes(id.toString())
-//       );
-//       if (invalidgames.length > 0) {
-//         throw new Error("Games Made: One or more selected games are invalid.");
-//       }
-//       return true;
-//     }),
-// ];
+const validateDev = [
+  body("newDev")
+    .trim()
+    .matches(/^[A-Za-z0-9\s]+$/)
+    .withMessage(
+      "Studio Name : must contain only letters, numbers, and spaces."
+    )
+    .isLength({ min: 3, max: 32 })
+    .withMessage("Studio Name : Has to have a length of between 3 and 32")
+    .custom(async (value) => {
+      devArr.forEach((element) => {
+        if (element.dev.toLowerCase() === value.toLowerCase()) {
+          throw new Error("Studio Name : Has already been Added");
+        }
+      });
+      return true;
+    }),
+  body("yearFd")
+    .trim()
+    .isInt({ min: 1900, max: 2100 })
+    .withMessage("Founded Year: must be between 1900 to 2100"),
+  body("gamesMd")
+    .optional()
+    .isArray()
+    .withMessage("Games Made : must be an array (internal error)")
+    .custom((value) => {
+      const invalidgames = value.filter(
+        (id) => !gameIds.includes(id.toString())
+      );
+      if (invalidgames.length > 0) {
+        throw new Error("Games Made: One or more selected games are invalid.");
+      }
+      return true;
+    }),
+];
 
-// export const addNewDev = [
-//   validateNewDev,
-//   async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       let gamesSel;
-//       if (!req.body.gamesMd) {
-//         gamesSel = [];
-//       } else {
-//         gamesSel = req.body.gamesMd.map(Number);
-//       }
-//       return res.status(400).render("addDev", {
-//         errors: errors.array(),
-//         newDev: req.body.newDev,
-//         yearFd: req.body.yearFd,
-//         gamesMd: gamesSel,
-//         gameArr,
-//       });
-//     }
-//     const { newDev, yearFd, gamesMd } = matchedData(req);
+export const editDev = [
+  validateDev,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      let gamesSel;
+      if (!req.body.gamesMd) {
+        gamesSel = [];
+      } else {
+        gamesSel = req.body.gamesMd.map(Number);
+      }
+      return res.status(400).render("addDev", {
+        errors: errors.array(),
+        newDev: req.body.newDev,
+        yearFd: req.body.yearFd,
+        gamesMd: gamesSel,
+        gameArr,
+        pageState: `Edit Developer of ID: ${req.params.id}`,
+        submitState: "Submit changes",
+        action: "edtDevPg",
+      });
+    }
+    const { newDev, yearFd, gamesMd } = matchedData(req);
 
-//     await insertDev(newDev, yearFd, gamesMd);
+    await insertDev(newDev, yearFd, gamesMd);
 
-//     res.redirect("/");
-//   },
-// ];
+    res.redirect("/");
+  },
+];
 
 // const validateNewGenre = [
 //   body("newGenre")

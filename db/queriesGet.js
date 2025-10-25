@@ -18,8 +18,8 @@ export async function getDevList() {
 
 export async function getDevInfoByID(devId) {
   const { rows } = await Pool.query(
-    `SELECT developers.id AS id, developers.dev AS dev 
-    FROM  developers WHERE id=$1;`,
+    `SELECT developers.id AS id, developers.dev AS dev, 
+    developers.found_year AS year FROM  developers WHERE id=$1;`,
     [devId]
   );
   return rows;

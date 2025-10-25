@@ -4,6 +4,8 @@
   <body>
     <%- include('partials/homePageLink') %>
     <h2>Developer: <%= devName %></h2>
+    <h2>Year Founded: <%= devYear %></h2>
+    <a href="edtDevPg/<%= devID %>">Edit Developer</a>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>
   </body>
 </html>

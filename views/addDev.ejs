@@ -3,26 +3,16 @@
   <%- include('partials/head')%>
   <body>
     <%- include('partials/homePageLink') %>
-    <h1>Add New Developer</h1>
-    <form action="/addDev" method="post">
+    <h1><%= pageState %></h1>
+    <form action="/<%= action %>" method="post">
       <label for="newDev">
         Studio Name :
-        <input
-          type="text"
-          name="newDev"
-          id="newDev"
-          value="<%= locals.newDev %>"
-        />
+        <input type="text" name="newDev" id="newDev" value="<%= newDev %>" />
       </label>
 
       <label for="yearFd">
         Year Founded :
-        <input
-          type="number"
-          name="yearFd"
-          id="yearFd"
-          value="<%= locals.yearFd %>"
-        />
+        <input type="number" name="yearFd" id="yearFd" value="<%= yearFd %>" />
       </label>
       <br />
       <fieldset class="games">
@@ -36,7 +26,7 @@
         </div>
         <% } %>
       </fieldset>
-      <button type="submit">Submit</button>
+      <button type="submit"><%= submitState %></button>
     </form>
     <% if (locals.errors) {%> <%- include('partials/errors',{errors}) %> <% } %>
   </body>

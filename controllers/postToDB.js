@@ -181,6 +181,9 @@ export const addNewDev = [
         yearFd: req.body.yearFd,
         gamesMd: gamesSel,
         gameArr,
+        pageState: "Add New Developer",
+        submitState: "Submit",
+        action: "addDev",
       });
     }
     const { newDev, yearFd, gamesMd } = matchedData(req);
