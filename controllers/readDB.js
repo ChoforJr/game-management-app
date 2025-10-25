@@ -81,7 +81,7 @@ export async function updateGamePageGet(req, res) {
   const devArr = await getDevList();
   const genreArr = await getGenreList();
 
-  res.render("edtGamePg", {
+  res.render("gamePage", {
     pageState: `Edit Game With ID: ${req.params.id}`,
     submitState: "Submit Changes",
     action: `edtGamePg/${req.params.id}`,

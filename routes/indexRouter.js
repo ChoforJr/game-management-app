@@ -11,6 +11,8 @@ import {
 
 import { addNewGame, addNewDev, addNewGenre } from "../controllers/postToDB.js";
 
+import { updateGame } from "../controllers/putToDB.js";
+
 const indexRouter = Router();
 
 indexRouter.get("/", homePageGet);
@@ -29,5 +31,6 @@ indexRouter.get("/addGenre", addGenrePageGet);
 indexRouter.post("/addGenre", addNewGenre);
 
 indexRouter.get("/edtGamePg/:id", updateGamePageGet);
+indexRouter.put("/edtGamePg/:id", updateGame);
 
 export default indexRouter;

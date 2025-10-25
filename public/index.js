@@ -27,7 +27,7 @@ async function handleUpdateBtn(event) {
   const elementId = event.currentTarget.id;
 
   try {
-    window.location.href = `gamePage/${elementId}`;
+    window.location.href = `edtGamePg/${elementId}`;
   } catch (error) {
     console.error("Error:", error);
   }
