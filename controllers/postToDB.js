@@ -242,6 +242,9 @@ export const addNewGenre = [
         newGenre: req.body.newGenre,
         gamesInc: gamesSel,
         gameArr,
+        pageState: "Add New Genre",
+        submitState: "Submit",
+        action: "addGenre",
       });
     }
     const { newGenre, gamesInc } = matchedData(req);

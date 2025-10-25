@@ -1,6 +1,6 @@
 import { body, validationResult, matchedData } from "express-validator";
 import { getAllGamesInfo, getDevList, getGenreList } from "../db/queriesGet.js";
-import { editGame, editDev } from "../db/queriesPut.js";
+import { editGame, editDev, editGenre } from "../db/queriesPut.js";
 
 const devArr = await getDevList();
 const genreArr = await getGenreList();
@@ -185,60 +185,58 @@ export const updateDev = [
   },
 ];
 
-// const validateGenre = [
-//   body("newGenre")
-//     .trim()
-//     .matches(/^[A-Za-z0-9\s]+$/)
-//     .withMessage("Genre Name : must contain only letters, numbers, and spaces.")
-//     .isLength({ min: 3, max: 32 })
-//     .withMessage("Genre Name : Has to have a length of between 3 and 32")
-//     .custom(async (value) => {
-//       genreArr.forEach((element) => {
-//         if (element.genre.toLowerCase() === value.toLowerCase()) {
-//           throw new Error("Studio Name : Has already been Added");
-//         }
-//       });
-//       return true;
-//     }),
-//   body("gamesInc")
-//     .optional()
-//     .isArray()
-//     .withMessage("Games Included : must be an array (internal error)")
-//     .custom((value) => {
-//       const invalidgames = value.filter(
-//         (id) => !gameIds.includes(id.toString())
-//       );
-//       if (invalidgames.length > 0) {
-//         throw new Error(
-//           "Games Included : One or more selected games are invalid."
-//         );
-//       }
-//       return true;
-//     }),
-// ];
+const validateGenre = [
+  body("newGenre")
+    .trim()
+    .matches(/^[A-Za-z0-9\s]+$/)
+    .withMessage("Genre Name : must contain only letters, numbers, and spaces.")
+    .isLength({ min: 3, max: 32 })
+    .withMessage("Genre Name : Has to have a length of between 3 and 32"),
+  body("gamesInc")
+    .optional()
+    .isArray()
+    .withMessage("Games Included : must be an array (internal error)")
+    .custom((value) => {
+      const invalidgames = value.filter(
+        (id) => !gameIds.includes(id.toString())
+      );
+      if (invalidgames.length > 0) {
+        throw new Error(
+          "Games Included : One or more selected games are invalid."
+        );
+      }
+      return true;
+    }),
+];
 
-// export const updateGenre = [
-//   validateGenre,
-//   async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       let gamesSel;
-//       if (!req.body.gamesInc) {
-//         gamesSel = [];
-//       } else {
-//         gamesSel = req.body.gamesInc.map(Number);
-//       }
-//       return res.status(400).render("addGenre", {
-//         errors: errors.array(),
-//         newGenre: req.body.newGenre,
-//         gamesInc: gamesSel,
-//         gameArr,
-//       });
-//     }
-//     const { newGenre, gamesInc } = matchedData(req);
+export const updateGenre = [
+  validateGenre,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      let gamesSel;
+      if (!req.body.gamesInc) {
+        gamesSel = [];
+      } else {
+        gamesSel = req.body.gamesInc.map(Number);
+      }
+      return res.status(400).render("addGenre", {
+        errors: errors.array(),
+        newGenre: req.body.newGenre,
+        gamesInc: gamesSel,
+        gameArr,
+        pageState: `Edit Genre of ID: ${req.params.id}`,
+        submitState: "Submit changes",
+        action: `genrePage/edtGenrePg/${req.params.id}`,
+      });
+    }
+    const { newGenre, gamesInc } = matchedData(req);
 
-//     await insertGenre(newGenre, gamesInc);
+    const gamesIncOrNot = gamesInc || [];
+    const genreID = req.params.id;
 
-//     res.redirect("/");
-//   },
-// ];
+    await editGenre(newGenre, gamesIncOrNot, genreID);
+
+    res.redirect("/");
+  },
+];

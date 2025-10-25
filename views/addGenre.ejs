@@ -3,15 +3,15 @@
   <%- include('partials/head')%>
   <body>
     <%- include('partials/homePageLink') %>
-    <h1>Add New Genre</h1>
-    <form action="/addGenre" method="post">
+    <h1><%= pageState %></h1>
+    <form action="/<%= action %>" method="post">
       <label for="newGenre">
         Genre Name :
         <input
           type="text"
           name="newGenre"
           id="newGenre"
-          value="<%= locals.newGenre %>"
+          value="<%= newGenre %>"
         />
       </label>
 
@@ -27,7 +27,7 @@
         </div>
         <% } %>
       </fieldset>
-      <button type="submit">Submit</button>
+      <button type="submit"><%= submitState %></button>
     </form>
     <% if (locals.errors) {%> <%- include('partials/errors',{errors}) %> <% } %>
   </body>

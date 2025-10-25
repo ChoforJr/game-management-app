@@ -43,6 +43,7 @@ export async function genreGamesGet(req, res) {
   const gameArr = await getGamesInfoByGenreID(req.params.id);
   const genreInfo = await getGenreInfoByID(req.params.id);
   res.render("genrePage", {
+    genreID: req.params.id,
     script: "mod.js",
     gameArr,
     devHeader: "Main Developer",
@@ -81,7 +82,14 @@ export async function addDevPageGet(req, res) {
 
 export async function addGenrePageGet(req, res) {
   const gameArr = await getAllGamesInfo();
-  res.render("addGenre", { gameArr, gamesInc: [] });
+  res.render("addGenre", {
+    newGenre: "",
+    gameArr,
+    gamesInc: [],
+    pageState: "Add New Genre",
+    submitState: "Submit",
+    action: "addGenre",
+  });
 }
 
 export async function updateGamePageGet(req, res) {
@@ -123,5 +131,19 @@ export async function updateDevPageGet(req, res) {
     pageState: `Edit Developer of ID: ${req.params.id}`,
     submitState: "Submit changes",
     action: `devPage/edtDevPg/${req.params.id}`,
+  });
+}
+
+export async function updateGenrePageGet(req, res) {
+  const gameArr = await getAllGamesInfo();
+  const gameArrInfo = await getGamesInfoByGenreID(req.params.id);
+  const genreInfo = await getGenreInfoByID(req.params.id);
+  res.render("addGenre", {
+    newGenre: genreInfo[0].genre,
+    gameArr,
+    gamesInc: gameArrInfo.map((item) => item.id),
+    pageState: `Edit Genre of ID: ${req.params.id}`,
+    submitState: "Submit changes",
+    action: `genrePage/edtGenrePg/${req.params.id}`,
   });
 }

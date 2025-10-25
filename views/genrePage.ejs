@@ -4,6 +4,7 @@
   <body>
     <%- include('partials/homePageLink') %>
     <h2>Genre: <%= genreName %></h2>
+    <a href="edtGenrePg/<%= genreID %>">Edit Genre</a>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>
   </body>
 </html>

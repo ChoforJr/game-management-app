@@ -126,21 +126,44 @@ export async function editDev(newDev, yearFd, gamesMdOrNot, devID) {
   }
 }
 
-// export async function editGenre(newGenre, gamesInc) {
-//   await Pool.query(
-//     `
-//     WITH inserted_genres AS (
-//         INSERT INTO genres (genre)
-//         VALUES ($1)
-//         RETURNING id
-//     )
-//         INSERT INTO games_genres (genre_id, game_id)
-//         SELECT
-//             insGen.id AS genre_id,
-//             UNNEST($2::int[]) AS game_id
-//         FROM inserted_genres insGen
-//         RETURNING genre_id;
-//     `,
-//     [newGenre, gamesInc]
-//   );
-// }
+export async function editGenre(newGenre, gamesIncOrNot, genreID) {
+  const client = await Pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    await client.query(
+      `
+        UPDATE genres SET
+            genre = $1
+        WHERE id = $2;
+        `,
+      [newGenre, genreID]
+    );
+
+    await client.query(
+      `
+        DELETE FROM games_genres
+        WHERE genre_id = $1 
+        AND game_id <> ALL($2::int[]);
+        `,
+      [genreID, gamesIncOrNot]
+    );
+
+    await client.query(
+      `
+        INSERT INTO games_genres (game_id, genre_id)
+        SELECT UNNEST($2::int[]) AS game_id, $1 AS genre_id
+        ON CONFLICT (game_id, genre_id) DO NOTHING;
+        `,
+      [genreID, gamesIncOrNot]
+    );
+
+    await client.query("COMMIT");
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+}
