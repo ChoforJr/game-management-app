@@ -83,59 +83,6 @@ export async function editGame(
   }
 }
 
-// export async function editGame(
-//   game,
-//   year,
-//   mainDev,
-//   mainGenres,
-//   sales,
-//   otherDevMainDev,
-//   otherGenreMainGenre,
-//   gameID
-// ) {
-//   await Pool.query(
-//     `
-//     BEGIN;
-
-//     UPDATE games SET
-//         game = $1,
-//         res_year = $2,
-//         main_dev = $3,
-//         main_genre = $4,
-//         sales_in_millions = $5
-//     WHERE id = $8;
-
-//     DELETE FROM games_devs
-//     WHERE game_id = $8
-//     AND dev_id <> ALL($6::int[]);
-
-//     INSERT INTO games_devs (game_id, dev_id)
-//     SELECT $8 AS game_id, UNNEST($6::int[]) AS dev_id
-//     ON CONFLICT (game_id, dev_id) DO NOTHING;
-
-//     DELETE FROM games_genres
-//     WHERE game_id = $8
-//     AND genre_id <> ALL($7::int[]);
-
-//     INSERT INTO games_genres (game_id, genre_id)
-//     SELECT $8 AS game_id, UNNEST($7::int[]) AS genre_id
-//     ON CONFLICT (game_id, genre_id) DO NOTHING;
-
-//     COMMIT;
-//     `,
-//     [
-//       game,
-//       year,
-//       mainDev,
-//       mainGenres,
-//       sales,
-//       otherDevMainDev,
-//       otherGenreMainGenre,
-//       gameID,
-//     ]
-//   );
-// }
-
 // export async function editDev(newDev, yearFd, gamesMd) {
 //   await Pool.query(
 //     `

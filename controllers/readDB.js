@@ -29,6 +29,7 @@ export async function devGamesGet(req, res) {
   const gameArr = await getGamesInfoByDevID(req.params.id);
   const devInfo = await getDevInfoByID(req.params.id);
   res.render("devPage", {
+    script: "mod.js",
     gameArr,
     devHeader: "Developer",
     genreHeader: "Main Genre",
@@ -40,6 +41,7 @@ export async function genreGamesGet(req, res) {
   const gameArr = await getGamesInfoByGenreID(req.params.id);
   const genreInfo = await getGenreInfoByID(req.params.id);
   res.render("genrePage", {
+    script: "mod.js",
     gameArr,
     devHeader: "Main Developer",
     genreHeader: "Genre",
@@ -87,7 +89,7 @@ export async function updateGamePageGet(req, res) {
     action: `edtGamePg/${req.params.id}`,
     devArr,
     genreArr,
-    script: "editGame.js",
+    script: "addGame.js",
     otherDev: otherDevArr.map((item) => item.id),
     otherGenre: otherGenreArr.map((item) => item.id),
     game: gameArrByID[0].game,

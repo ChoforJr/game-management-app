@@ -90,7 +90,7 @@ export const updateGame = [
         mainGenres: req.body.mainGenres,
         otherDev: devOthers,
         otherGenre: genreOthers,
-        script: "editGame.js",
+        script: "addGame.js",
         devArr,
         genreArr,
         pageState: `Edit Game With ID: ${req.params.id}`,
@@ -120,7 +120,7 @@ export const updateGame = [
       otherGenreMainGenre,
       gameID
     );
-    res.status(204).end();
+    res.redirect("/");
   },
 ];
 
