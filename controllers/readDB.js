@@ -122,6 +122,6 @@ export async function updateDevPageGet(req, res) {
     gamesMd: gameArrInfo.map((item) => item.id),
     pageState: `Edit Developer of ID: ${req.params.id}`,
     submitState: "Submit changes",
-    action: "edtDevPg",
+    action: `devPage/edtDevPg/${req.params.id}`,
   });
 }

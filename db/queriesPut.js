@@ -83,24 +83,48 @@ export async function editGame(
   }
 }
 
-// export async function editDev(newDev, yearFd, gamesMd) {
-//   await Pool.query(
-//     `
-//     WITH inserted_dev AS (
-//         INSERT INTO developers (dev, found_year)
-//         VALUES ($1, $2)
-//         RETURNING id
-//     )
-//         INSERT INTO games_devs (dev_id, game_id)
-//         SELECT
-//             indev.id AS dev_id,
-//             UNNEST($3::int[]) AS game_id
-//         FROM inserted_dev indev
-//         RETURNING dev_id;
-//     `,
-//     [newDev, yearFd, gamesMd]
-//   );
-// }
+export async function editDev(newDev, yearFd, gamesMdOrNot, devID) {
+  const client = await Pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    await client.query(
+      `
+        UPDATE developers SET
+            dev = $1,
+            found_year = $2
+        WHERE id = $3;
+        `,
+      [newDev, yearFd, devID]
+    );
+
+    await client.query(
+      `
+        DELETE FROM games_devs
+        WHERE dev_id = $1 
+        AND game_id <> ALL($2::int[]);
+        `,
+      [devID, gamesMdOrNot]
+    );
+
+    await client.query(
+      `
+        INSERT INTO games_devs (game_id, dev_id)
+        SELECT UNNEST($2::int[]) AS game_id, $1 AS dev_id
+        ON CONFLICT (game_id, dev_id) DO NOTHING;
+        `,
+      [devID, gamesMdOrNot]
+    );
+
+    await client.query("COMMIT");
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+}
 
 // export async function editGenre(newGenre, gamesInc) {
 //   await Pool.query(

@@ -5,7 +5,7 @@ import {
   updateDevPageGet,
 } from "../controllers/readDB.js";
 
-import { updateGame } from "../controllers/putToDB.js";
+import { updateGame, updateDev } from "../controllers/putToDB.js";
 
 const devFnRouter = Router();
 
@@ -15,6 +15,6 @@ devFnRouter.get("/edtGamePg/:id", updateGamePageGet);
 devFnRouter.post("/edtGamePg/:id", updateGame);
 
 devFnRouter.get("/edtDevPg/:id", updateDevPageGet);
-// devFnRouter.post("/edtDevPg/:id", updateDev);
+devFnRouter.post("/edtDevPg/:id", updateDev);
 
 export default devFnRouter;

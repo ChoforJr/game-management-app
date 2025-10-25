@@ -1,6 +1,6 @@
 import { body, validationResult, matchedData } from "express-validator";
 import { getAllGamesInfo, getDevList, getGenreList } from "../db/queriesGet.js";
-import { editGame } from "../db/queriesPut.js";
+import { editGame, editDev } from "../db/queriesPut.js";
 
 const devArr = await getDevList();
 const genreArr = await getGenreList();
@@ -132,15 +132,7 @@ const validateDev = [
       "Studio Name : must contain only letters, numbers, and spaces."
     )
     .isLength({ min: 3, max: 32 })
-    .withMessage("Studio Name : Has to have a length of between 3 and 32")
-    .custom(async (value) => {
-      devArr.forEach((element) => {
-        if (element.dev.toLowerCase() === value.toLowerCase()) {
-          throw new Error("Studio Name : Has already been Added");
-        }
-      });
-      return true;
-    }),
+    .withMessage("Studio Name : Has to have a length of between 3 and 32"),
   body("yearFd")
     .trim()
     .isInt({ min: 1900, max: 2100 })
@@ -160,7 +152,7 @@ const validateDev = [
     }),
 ];
 
-export const editDev = [
+export const updateDev = [
   validateDev,
   async (req, res) => {
     const errors = validationResult(req);
@@ -179,18 +171,21 @@ export const editDev = [
         gameArr,
         pageState: `Edit Developer of ID: ${req.params.id}`,
         submitState: "Submit changes",
-        action: "edtDevPg",
+        action: `devPage/edtDevPg/${req.params.id}`,
       });
     }
     const { newDev, yearFd, gamesMd } = matchedData(req);
 
-    await insertDev(newDev, yearFd, gamesMd);
+    const gamesMdOrNot = gamesMd || [];
+    const devID = req.params.id;
+
+    await editDev(newDev, yearFd, gamesMdOrNot, devID);
 
     res.redirect("/");
   },
 ];
 
-// const validateNewGenre = [
+// const validateGenre = [
 //   body("newGenre")
 //     .trim()
 //     .matches(/^[A-Za-z0-9\s]+$/)
@@ -222,8 +217,8 @@ export const editDev = [
 //     }),
 // ];
 
-// export const addNewGenre = [
-//   validateNewGenre,
+// export const updateGenre = [
+//   validateGenre,
 //   async (req, res) => {
 //     const errors = validationResult(req);
 //     if (!errors.isEmpty()) {
