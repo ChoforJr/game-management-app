@@ -101,15 +101,6 @@ export async function editDev(newDev, yearFd, gamesMdOrNot, devID) {
 
     await client.query(
       `
-      UPDATE games SET
-          main_dev = null
-      WHERE main_dev = $1;
-        `,
-      [devID]
-    );
-
-    await client.query(
-      `
         DELETE FROM games_devs
         WHERE dev_id = $1 
         AND game_id <> ALL($2::int[]);
@@ -148,15 +139,6 @@ export async function editGenre(newGenre, gamesIncOrNot, genreID) {
         WHERE id = $2;
         `,
       [newGenre, genreID]
-    );
-
-    await client.query(
-      `
-      UPDATE games SET
-          main_genre = null
-      WHERE main_dev = $1;
-        `,
-      [genreID]
     );
 
     await client.query(

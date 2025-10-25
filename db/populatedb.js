@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS games (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   game VARCHAR ( 255 ),
   res_year INTEGER,
-  main_dev INTEGER REFERENCES developers (id),
-  main_genre INTEGER REFERENCES genres (id),
+  main_dev INTEGER REFERENCES developers (id) ON DELETE CASCADE,
+  main_genre INTEGER REFERENCES genres (id) ON DELETE CASCADE,
   sales_in_millions INTEGER
 );
 
