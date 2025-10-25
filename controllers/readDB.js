@@ -7,6 +7,8 @@ import {
   getGameInfoById,
   getDevsByGameId,
   getGenreByGameId,
+  getDevInfoByID,
+  getGenreInfoByID,
 } from "../db/queriesGet.js";
 
 export async function homePageGet(req, res) {
@@ -25,21 +27,23 @@ export async function homePageGet(req, res) {
 
 export async function devGamesGet(req, res) {
   const gameArr = await getGamesInfoByDevID(req.params.id);
+  const devInfo = await getDevInfoByID(req.params.id);
   res.render("devPage", {
     gameArr,
     devHeader: "Developer",
     genreHeader: "Main Genre",
-    devName: gameArr[0].dev,
+    devName: devInfo[0].dev,
   });
 }
 
 export async function genreGamesGet(req, res) {
   const gameArr = await getGamesInfoByGenreID(req.params.id);
+  const genreInfo = await getGenreInfoByID(req.params.id);
   res.render("genrePage", {
     gameArr,
     devHeader: "Main Developer",
     genreHeader: "Genre",
-    genreName: gameArr[0].genre,
+    genreName: genreInfo[0].genre,
   });
 }
 
@@ -77,10 +81,10 @@ export async function updateGamePageGet(req, res) {
   const devArr = await getDevList();
   const genreArr = await getGenreList();
 
-  res.render("gamePage", {
+  res.render("edtGamePg", {
     pageState: `Edit Game With ID: ${req.params.id}`,
     submitState: "Submit Changes",
-    action: `gamePage/${req.params.id}`,
+    action: `edtGamePg/${req.params.id}`,
     devArr,
     genreArr,
     script: "editGame.js",
@@ -89,8 +93,8 @@ export async function updateGamePageGet(req, res) {
     game: gameArrByID[0].game,
     year: gameArrByID[0].res_year,
     sales: gameArrByID[0].sales_in_millions,
-    sales: gameArrByID[0].sales_in_millions,
     mainDev: gameArrByID[0].main_dev,
     mainGenres: gameArrByID[0].main_genre,
+    gameID: req.params.id,
   });
 }

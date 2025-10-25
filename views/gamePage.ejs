@@ -76,7 +76,7 @@
         </div>
         <% } %>
       </fieldset>
-      <button type="submit" id="submitBtn"><%= submitState %></button>
+      <button type="submit" id="<%= locals.gameID %>" class="submitBtn"><%= submitState %></button>
     </form>
     <% if (locals.errors) {%>
       <%- include('partials/errors',{errors}) %>

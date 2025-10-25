@@ -28,15 +28,15 @@ CREATE TABLE IF NOT EXISTS games (
 );
 
 CREATE TABLE IF NOT EXISTS games_devs (
-  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  game_id INTEGER REFERENCES games (id),
-  dev_id INTEGER REFERENCES developers (id)
+  game_id INTEGER REFERENCES games (id) ON DELETE CASCADE,
+  dev_id INTEGER REFERENCES developers (id) ON DELETE CASCADE,
+  PRIMARY KEY (game_id, dev_id)
 );
 
 CREATE TABLE IF NOT EXISTS games_genres (
-  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  game_id INTEGER REFERENCES games (id),
-  genre_id INTEGER REFERENCES genres (id)
+  game_id INTEGER REFERENCES games (id) ON DELETE CASCADE,
+  genre_id INTEGER REFERENCES genres (id) ON DELETE CASCADE,
+  PRIMARY KEY (game_id, genre_id)
 );
 
 BEGIN;
@@ -58,7 +58,7 @@ VALUES
   ('Resident Evil 4 Remake', 2022, 1, 3, 1300),
   ('Resident Evil 2 Remake', 2021, 1, 3, 1300),
   ('Mario Cart 2', 2025, 2, 1, 400),
-  ('Spider-Man PS4', 2018, 3, 2, 1300);
+  ('Spider Man PS4', 2018, 3, 2, 1300);
 
 INSERT INTO games_devs (game_id, dev_id) 
 VALUES (1, 1), (2, 1), (3, 2), (4, 3);

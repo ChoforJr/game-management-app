@@ -16,9 +16,26 @@ export async function getDevList() {
   return rows;
 }
 
+export async function getDevInfoByID(devId) {
+  const { rows } = await Pool.query(
+    `SELECT developers.id AS id, developers.dev AS dev 
+    FROM  developers WHERE id=$1;`,
+    [devId]
+  );
+  return rows;
+}
+
 export async function getGenreList() {
   const { rows } = await Pool.query(
     "SELECT genres.id AS id, genres.genre AS genre FROM  genres;"
+  );
+  return rows;
+}
+
+export async function getGenreInfoByID(genreId) {
+  const { rows } = await Pool.query(
+    `SELECT genres.id AS id, genres.genre AS genre FROM  genres WHERE id=$1;`,
+    [genreId]
   );
   return rows;
 }

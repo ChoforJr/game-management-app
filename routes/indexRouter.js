@@ -28,6 +28,6 @@ indexRouter.post("/addDev", addNewDev);
 indexRouter.get("/addGenre", addGenrePageGet);
 indexRouter.post("/addGenre", addNewGenre);
 
-indexRouter.get("/gamePage/:id", updateGamePageGet);
+indexRouter.get("/edtGamePg/:id", updateGamePageGet);
 
 export default indexRouter;
