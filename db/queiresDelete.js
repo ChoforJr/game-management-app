@@ -9,3 +9,13 @@ export async function delGameQuery(params) {
     [params]
   );
 }
+
+export async function delDevQuery(params) {
+  await Pool.query(
+    `
+          DELETE FROM developers
+          WHERE id = $1;
+        `,
+    [params]
+  );
+}

@@ -6,6 +6,9 @@
     <h2>Developer: <%= devName %></h2>
     <h2>Year Founded: <%= devYear %></h2>
     <a href="edtDevPg/<%= devID %>">Edit Developer</a>
+    <form action="/devPage/delDev/<%= devID %>" method="post">
+      <button type="submit">Delete Developer</button>
+    </form>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>
   </body>
 </html>
