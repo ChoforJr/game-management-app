@@ -14,6 +14,9 @@
       </li>
     </ul>
     <%- include('partials/homePageLink') %>
+    <form action="/reverseAll" method="post">
+      <button type="submit">Reverse All Changes</button>
+    </form>
     <%-include('partials/selectCategories', {devArr,genreArr}) %>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>
   </body>

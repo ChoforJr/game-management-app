@@ -9,7 +9,7 @@ import {
 
 import { addNewGame, addNewDev, addNewGenre } from "../controllers/postToDB.js";
 import { updateGame } from "../controllers/putToDB.js";
-import { delGame } from "../controllers/deleteFromDB.js";
+import { delGame, reverseAll } from "../controllers/deleteFromDB.js";
 
 import devFnRouter from "./devFnRouter.js";
 import genreFnRouter from "./genreFnRouter.js";
@@ -35,5 +35,7 @@ indexRouter.get("/edtGamePg/:id", updateGamePageGet);
 indexRouter.post("/edtGamePg/:id", updateGame);
 
 indexRouter.post("/delGm/:id", delGame);
+
+indexRouter.post("/reverseAll", reverseAll);
 
 export default indexRouter;
