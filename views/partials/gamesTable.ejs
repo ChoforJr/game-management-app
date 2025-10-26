@@ -10,6 +10,7 @@
     <th><%= genreHeader %></th>
     <th>Sales</th>
     <th>Updates</th>
+    <th>Delete</th>
   </tr>
   <% for( let i = 0; i < gameArr.length; i++ ) { %>
   <tr>
@@ -21,6 +22,11 @@
     <td><%= gameArr[i].sales %> Millions</td>
     <td>
       <button id="<%= gameArr[i].id %>" class="updateBtn">Update</button>
+    </td>
+    <td>
+      <form action="/delGm/<%= gameArr[i].id %>" method="post">
+        <button type="submit">Delete</button>
+      </form>
     </td>
   </tr>
   <% } %>
