@@ -76,6 +76,9 @@ const validateGame = [
 export const addNewGame = [
   validateGame,
   async (req, res) => {
+    const devArr = await getDevList();
+    const genreArr = await getGenreList();
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       let devOthers, genreOthers;
@@ -167,6 +170,8 @@ const validateNewDev = [
 export const addNewDev = [
   validateNewDev,
   async (req, res) => {
+    const gameArr = await getAllGamesInfo();
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       let gamesSel;
@@ -229,6 +234,8 @@ const validateNewGenre = [
 export const addNewGenre = [
   validateNewGenre,
   async (req, res) => {
+    const gameArr = await getAllGamesInfo();
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       let gamesSel;

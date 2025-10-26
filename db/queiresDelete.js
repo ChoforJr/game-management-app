@@ -19,3 +19,13 @@ export async function delDevQuery(params) {
     [params]
   );
 }
+
+export async function delGenreQuery(params) {
+  await Pool.query(
+    `
+            DELETE FROM genres
+            WHERE id = $1;
+          `,
+    [params]
+  );
+}

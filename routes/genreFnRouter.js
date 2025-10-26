@@ -6,6 +6,7 @@ import {
 } from "../controllers/readDB.js";
 
 import { updateGame, updateGenre } from "../controllers/putToDB.js";
+import { delGenre } from "../controllers/deleteFromDB.js";
 
 const genreFnRouter = Router();
 
@@ -16,5 +17,7 @@ genreFnRouter.post("/edtGamePg/:id", updateGame);
 
 genreFnRouter.get("/edtGenrePg/:id", updateGenrePageGet);
 genreFnRouter.post("/edtGenrePg/:id", updateGenre);
+
+genreFnRouter.post("/delGenre/:id", delGenre);
 
 export default genreFnRouter;

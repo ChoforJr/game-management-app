@@ -3,8 +3,11 @@
   <%- include('partials/head')%>
   <body>
     <%- include('partials/homePageLink') %>
-    <h2>Genre: <%= genreName %></h2>
     <a href="edtGenrePg/<%= genreID %>">Edit Genre</a>
+    <h2>Genre: <%= genreName %></h2>
+    <form action="/genrePage/delGenre/<%= genreID %>" method="post">
+      <button type="submit">Delete Genre</button>
+    </form>
     <%-include('partials/gamesTable', {gameArr,devHeader,genreHeader}) %>
   </body>
 </html>
