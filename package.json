@@ -13,7 +13,7 @@
   },
   "keywords": [],
   "author": "FORSAKANG CHOFOR JUNIOR",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
